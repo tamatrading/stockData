@@ -70,7 +70,7 @@ def download_data():
 # GUIの作成
 window = tk.Tk()
 window.title("株価データダウンローダ")
-window.geometry("250x330")
+window.geometry("250x380")
 
 # 空白行の挿入
 tk.Label(window, text="").pack()
