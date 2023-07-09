@@ -25,8 +25,10 @@ def download_stock_data(symbol, period, interval):
     except Exception as e:
         return None, f"yfinanceエラー： {str(e)}"
 
-def process_data_frame(df):
-    df.index += pd.Timedelta(hours=9)
+def process_data_frame(df, sym):
+    if ".T" not in sym:
+        df.index += pd.Timedelta(hours=9)
+
     df['Date'], df['Time'] = df.index.date, df.index.time
     df = df[['Date', 'Time'] + [c for c in df if c not in ['Date', 'Time']]]
     df = df.drop(columns=["Adj Close"]).reset_index(drop=True)
@@ -48,7 +50,7 @@ def csv_main(symbol, period, interval, filename):
         #result_label.config(text=error_message)
         return False
     else:
-        processed_data = process_data_frame(data)
+        processed_data = process_data_frame(data, symbol)
         save_to_csv(processed_data, filename)
         result_label.config(text="データをダウンロードしました。")
         return True
