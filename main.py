@@ -19,11 +19,7 @@ def load_input_values():
     except FileNotFoundError:
         return "", "", ""
 
-def download_stock_data(symbol, period, interval):
-    try:
-        return yf.download(tickers=symbol, period=period, interval=interval), None
-    except Exception as e:
-        return None, f"yfinanceエラー： {str(e)}"
+
 
 def process_data_frame(df, sym):
     if ".T" not in sym:
